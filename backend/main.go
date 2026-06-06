@@ -1,8 +1,11 @@
 package main
 
 import (
-	"log"
 	"golang-project/config"
+	"golang-project/routes"
+	"log"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -12,5 +15,10 @@ func main() {
 	// 2. Initialize Database & Run migrations using Goose
 	config.InitDB()
 
-	log.Println("Backend server is ready! Start writing your code.")
+	r := gin.Default()
+	routes.UsersRoutes(r)
+	routes.BannerRoutes(r)
+
+	log.Println("Backend server is running on http://localhost:8080")
+	r.Run(":8080")
 }
